@@ -13,7 +13,7 @@ const ResumeCard = ({
     >
       <div className="resume-card-header">
         <div className="flex flex-col gap-2">
-          <h2 className="text-black font-bold wrap-break-word'">
+          <h2 className="text-black! font-bold wrap-break-word'">
             {companyName}
           </h2>
           <h3 className="text-lg wrap-break-word text-gray-500">{jobTitle}</h3>
