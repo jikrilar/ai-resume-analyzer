@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
 import { usePuterStore } from "../lib/puter";
 import Summary from "../components/Summary";
 import ATS from "../components/ATS";
 import Details from "../components/Details";
 
 export const meta = () => [
-  { title: "Resumind | Review" },
+  { title: "Resumind | Review " },
   { name: "description", content: "Detailed overview of your resume" },
 ];
 
-const resume = () => {
+const Resume = () => {
   const { auth, isLoading, fs, kv } = usePuterStore();
   const { id } = useParams();
   const [imageUrl, setImageUrl] = useState("");
@@ -61,14 +61,13 @@ const resume = () => {
         </Link>
       </nav>
       <div className="flex flex-row w-full max-lg:flex-col-reverse">
-        <section className="feedback-section [url('/images/small.svg')] bg-cover h-screen sticky top-0 items-center justify-center">
+        <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-screen sticky top-0 items-center justify-center">
           {imageUrl && resumeUrl && (
             <div className="animate-in fade-in duration-1000 gradient-border max-sm:m-0 h-[90%] max-2xl:h-fit w-fit">
               <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
                 <img
                   src={imageUrl}
-                  alt=""
-                  className="w-full h-fit object-contain rounded-2xl"
+                  className="w-full h-full object-contain rounded-2xl"
                   title="resume"
                 />
               </a>
@@ -82,17 +81,16 @@ const resume = () => {
               <Summary feedback={feedback} />
               <ATS
                 score={feedback.ATS.score || 0}
-                suggestions={feedback.padStart.tips || []}
+                suggestions={feedback.ATS.tips || []}
               />
               <Details feedback={feedback} />
             </div>
           ) : (
-            <img src="/images/resume-scan-2.gif" alt="" className="w-full" />
+            <img src="/images/resume-scan-2.gif" className="w-full" />
           )}
         </section>
       </div>
     </main>
   );
 };
-
-export default resume;
+export default Resume;

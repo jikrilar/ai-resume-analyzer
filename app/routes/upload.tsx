@@ -1,4 +1,4 @@
-import React, { useState, type FormEvent } from "react";
+import React, { useEffect, useState, type FormEvent } from "react";
 import Navbar from "../components/Navbar";
 import FileUploader from "../components/FileUploader";
 import { usePuterStore } from "../lib/puter";
@@ -13,6 +13,10 @@ const upload = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) navigate("/auth?next=/upload");
+  }, [auth.isAuthenticated]);
 
   const handleFileSelect = (file: File | null) => {
     setFile(file);
@@ -71,7 +75,7 @@ const upload = () => {
         ? feedback.message.content
         : feedback.message.content[0].text;
 
-    data.feedback = JSON.stringify(feedbackText);
+    data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setStatusText("Analysis complete, redirecting ...");
     console.log(data);
